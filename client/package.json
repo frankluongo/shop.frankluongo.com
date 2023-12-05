@@ -1,0 +1,26 @@
+{
+	"name": "shop.frankluongo.com",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"devDependencies": {
+		"@portabletext/svelte": "^2.1.4",
+		"@portabletext/types": "^2.0.8",
+		"@sanity/types": "^3.21.0",
+		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/kit": "^1.27.4",
+		"svelte": "^4.2.7",
+		"svelte-check": "^3.6.2",
+		"vite": "^4.4.2"
+	},
+	"type": "module",
+	"dependencies": {
+		"@sanity/client": "^6.9.1",
+		"@sanity/image-url": "^1.0.2",
+		"groq": "^3.21.0"
+	}
+}

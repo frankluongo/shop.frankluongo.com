@@ -1,0 +1,17 @@
+:root {
+  /* Color styles */
+  --black: rgba(39, 35, 33, 1);
+  --gray-5: rgba(65, 63, 62, 1);
+  --gray-4: rgba(98, 97, 96, 1);
+  --gray-3: rgba(139, 137, 137, 1);
+  --gray-2: rgba(203, 201, 200, 1);
+  --gray-1: rgba(245, 245, 245, 1);
+  --white: rgba(255, 255, 255, 1);
+  --teal: rgba(29, 172, 192, 1);
+  --red: rgba(252, 59, 18, 1);
+  --blue--on-light: rgba(22, 118, 155, 1);
+  --blue--on-dark: rgba(72, 204, 255, 1);
+  --green--on-dark: rgba(11, 193, 127, 1);
+  --green--on-light: rgba(15, 154, 104, 1);
+  --yellow--on-dark: rgba(254, 198, 29, 1);
+}
