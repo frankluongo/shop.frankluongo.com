@@ -1,9 +1,12 @@
 <script>
+  export let href = null;
+  export let rel = null;
+  export let target = null;
   export let tag = "button";
   export let type = "button";
 </script>
 
-<svelte:element this={tag} {type} class="button">
+<svelte:element this={tag} {href} {rel} {target} {type} class="button">
   <slot />
 </svelte:element>
 

@@ -1,11 +1,10 @@
 <script>
-  import { formatMoney, sanityImage } from "$lib/utilities";
+  import { sanityImage } from "$lib/utilities";
   import Button from "./Button.svelte";
   import Badge from "./Badge.svelte";
   import Price from "./Price.svelte";
 
   export let product;
-  console.log(product);
 </script>
 
 <a class="card" href={`/products/${product.slug.current}`}>

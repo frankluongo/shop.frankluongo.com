@@ -1,13 +1,46 @@
 <script>
   import { PortableText } from "@portabletext/svelte";
-  import Container from "$lib/layouts/Container.svelte";
+
   import { sanityImage } from "$lib/utilities";
   import Badge from "$lib/components/Badge.svelte";
-  import Price from "../../../lib/components/Price.svelte";
-  import Button from "../../../lib/components/Button.svelte";
+  import Price from "$lib/components/Price.svelte";
+  import Button from "$lib/components/Button.svelte";
+
   export let data;
+  let activeSrc;
+  let activeIndex;
   const product = data.product;
-  console.log(product);
+  const images = product.images.length - 1;
+
+  function closeLightbox() {
+    activeSrc = null;
+    activeIndex = null;
+  }
+
+  function checkNext(index) {
+    if (index > images) return 0;
+    if (index < 0) return images;
+    return index;
+  }
+
+  function goToNext() {
+    const ctrls = document.querySelectorAll("[data-lightbox-control]");
+    const next = checkNext(activeIndex + 1);
+    activeSrc = ctrls[next].dataset.url;
+    activeIndex = next;
+  }
+
+  function goToPrev() {
+    const ctrls = document.querySelectorAll("[data-lightbox-control]");
+    const next = checkNext(activeIndex - 1);
+    activeSrc = ctrls[next].dataset.url;
+    activeIndex = next;
+  }
+
+  function handleImageClick() {
+    activeIndex = parseInt(this.dataset.index);
+    activeSrc = this.dataset.url;
+  }
 </script>
 
 <div class="page">
@@ -31,12 +64,21 @@
     {#if product.images}
       <div class="images-wrapper--outer">
         <div class="images-wrapper--inner">
-          {#each product.images as image}
-            <img
-              class="image"
-              src={sanityImage(image).width(64).height(64).url()}
-              alt="Image for {product.title}"
-            />
+          {#each product.images as image, index}
+            <button
+              class="lightbox-open"
+              on:click={handleImageClick}
+              data-lightbox-control
+              data-url={sanityImage(image).width(800).height(1200).url()}
+              data-index={index}
+              title={`View a larger version of the photo ${product.title}`}
+            >
+              <img
+                class="image"
+                src={sanityImage(image).width(64).height(64).url()}
+                alt="Image for {product.title}"
+              />
+            </button>
           {/each}
         </div>
       </div>
@@ -79,6 +121,29 @@
     </section>
   </div>
 </div>
+
+{#if activeSrc}
+  <div class="lightbox">
+    <button
+      on:click={closeLightbox}
+      class="lightbox-close"
+      title="Close lightbox">❌</button
+    >
+    <img
+      class="lightbox-image"
+      src={activeSrc}
+      alt="Hero image for {product.title}"
+    />
+    <button on:click={goToPrev} class="arrow arrow--previous">
+      <span data-visually-hidden>Previous image</span>
+      ⬅️
+    </button>
+    <button on:click={goToNext} class="arrow arrow--next">
+      <span data-visually-hidden>Next image</span>
+      ➡️
+    </button>
+  </div>
+{/if}
 
 <style>
   a {
@@ -153,6 +218,77 @@
     padding: 1rem;
 
     background: var(--gray-1);
+  }
+
+  .arrow {
+    bottom: 1rem;
+    position: absolute;
+
+    height: 2rem;
+    width: 2rem;
+
+    font-size: 0.75rem;
+
+    appearance: none;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .arrow--previous {
+    left: 1rem;
+  }
+
+  .arrow--next {
+    right: 1rem;
+  }
+
+  .lightbox {
+    inset: 0;
+    position: fixed;
+
+    align-items: center;
+    display: flex;
+    height: 100%;
+    width: 100%;
+
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+
+    height: 2rem;
+    width: 2rem;
+
+    font-size: 0.75rem;
+
+    appearance: none;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .lightbox-image {
+    height: auto;
+    max-height: 100vh;
+    width: 100%;
+
+    object-fit: contain;
+  }
+
+  .lightbox-open {
+    margin: 0;
+    padding: 0;
+
+    appearance: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
   }
 
   .page {
