@@ -11,7 +11,18 @@ export const client = createClient({
 
 export async function fetchProduct(slug) {
   return await client.fetch(
-    groq`*[_type == "product" && slug.current == $slug][0]`,
+    groq`*[_type == "product" && slug.current == $slug][0]{
+      _id,
+      brand->,
+      description,
+      images,
+      originalPrice,
+      price,
+      slug,
+      thumbnail,
+      title,
+      url
+    }`,
     {
       slug,
     }
@@ -20,6 +31,13 @@ export async function fetchProduct(slug) {
 
 export async function fetchProducts() {
   return await client.fetch(
-    groq`*[_type == "product" && defined(slug.current)] | order(_createdAt desc)`
+    groq`*[_type == "product" && defined(slug.current)]{
+      brand->,
+      _id,
+      price,
+      slug,
+      thumbnail,
+      title
+    }`
   );
 }

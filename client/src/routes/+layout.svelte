@@ -20,4 +20,14 @@
 
     background-color: var(--black);
   }
+
+  main {
+    padding-top: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    main {
+      padding-top: 2rem;
+    }
+  }
 </style>

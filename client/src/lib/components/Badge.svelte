@@ -4,9 +4,10 @@
 
 <style>
   .badge {
+    display: inline-block;
     padding: 0.25rem 0.5rem;
 
-    color: var(--gray-9);
+    color: var(--black);
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;

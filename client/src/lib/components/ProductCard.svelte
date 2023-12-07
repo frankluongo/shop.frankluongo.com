@@ -1,10 +1,14 @@
 <script>
   import { formatMoney, sanityImage } from "$lib/utilities";
+  import Button from "./Button.svelte";
+  import Badge from "./Badge.svelte";
+  import Price from "./Price.svelte";
 
   export let product;
+  console.log(product);
 </script>
 
-<article class="card">
+<a class="card" href={`/products/${product.slug.current}`}>
   <aside>
     {#if product.thumbnail}
       <img
@@ -17,14 +21,17 @@
     {/if}
   </aside>
   <section>
+    <Badge>{product.brand.name}</Badge>
     <h3 class="title">
-      <a class="card__link" href={`/products/${product.slug.current}`}>
-        {product.title}
-      </a>
+      {product.title}
     </h3>
-    <p>{formatMoney(product.price)}</p>
+    <Price>
+      <svelte:fragment slot="label">Price:&nbsp;</svelte:fragment>
+      ${product.price}
+    </Price>
+    <Button>let me see it!</Button>
   </section>
-</article>
+</a>
 
 <style>
   .card {
@@ -32,8 +39,15 @@
     gap: 1rem;
     grid-template-columns: auto 1fr;
 
+    text-decoration: none;
+
     border: 1px solid var(--gray-2);
     border-radius: 0.5rem;
+    transition: box-shadow 150ms ease-in-out;
+  }
+
+  .card:is(:focus, :hover) {
+    box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.15);
   }
 
   .cover {
@@ -50,6 +64,7 @@
   }
 
   section {
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -58,7 +73,10 @@
   }
 
   .title {
+    color: var(--black);
     font-size: 1.125rem;
+    font-weight: bold;
+    line-height: 1.25;
   }
 
   @media (min-width: 1024px) {

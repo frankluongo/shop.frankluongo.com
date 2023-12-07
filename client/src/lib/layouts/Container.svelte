@@ -1,4 +1,8 @@
-<div class="container">
+<script>
+  export let classes = "";
+</script>
+
+<div class={`container ${classes}`}>
   <slot />
 </div>
 
